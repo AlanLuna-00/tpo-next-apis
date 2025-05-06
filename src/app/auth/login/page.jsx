@@ -1,16 +1,16 @@
-"use client"
-import React, { useState } from "react";
-import { TextField, Button, CircularProgress, Snackbar } from "@mui/material";
-import useLogin from "@/hooks/auth/useLogin";
+'use client';
+import React, { useState } from 'react';
+import { TextField, Button, CircularProgress, Snackbar } from '@mui/material';
+import useLogin from '@/hooks/auth/useLogin';
 
 const LoginPage = () => {
   const { login, error, user, token } = useLogin();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
-  const handleLogin = async (e) => {
+  const handleLogin = async e => {
     e.preventDefault();
     setIsLoading(true);
     await login(email, password);
@@ -29,7 +29,7 @@ const LoginPage = () => {
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={() => setOpenSnackbar(false)}
-        message={error || "Usuario logueado satisfactoriamente"}
+        message={error || 'Usuario logueado satisfactoriamente'}
       />
 
       <form onSubmit={handleLogin}>
@@ -39,7 +39,7 @@ const LoginPage = () => {
           variant="outlined"
           margin="normal"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={e => setEmail(e.target.value)}
         />
         <TextField
           fullWidth
@@ -48,17 +48,11 @@ const LoginPage = () => {
           variant="outlined"
           margin="normal"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={e => setPassword(e.target.value)}
         />
 
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          fullWidth
-          disabled={isLoading}
-        >
-          {isLoading ? <CircularProgress size={24} /> : "Login"}
+        <Button type="submit" variant="contained" color="primary" fullWidth disabled={isLoading}>
+          {isLoading ? <CircularProgress size={24} /> : 'Login'}
         </Button>
       </form>
     </div>

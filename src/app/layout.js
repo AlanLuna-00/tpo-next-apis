@@ -6,7 +6,7 @@ import '@fontsource/roboto/700.css';
 import './globals.css';
 import Navbar from '@/components/navbar/Navbar';
 import { CssBaseline, Box, Container } from '@mui/material';
-import { AuthProvider } from "@/contexts/AuthContext";
+import { AuthProvider } from '@/contexts/AuthContext';
 
 export const metadata = {
   title: 'TPO APIS UADE',
@@ -23,15 +23,13 @@ export default function RootLayout({ children }) {
         <meta name="description" content={metadata.description} />
       </head>
       <body className="font-roboto antialiased">
-        <CssBaseline />
-        <Navbar />
-        <Box component="main" sx={{ py: 4 }}>
-          <Container maxWidth="md">
-            <AuthProvider>
-              {children}
-            </AuthProvider>
-          </Container>
-        </Box>
+        <AuthProvider>
+          <CssBaseline />
+          <Navbar />
+          <Box component="main" sx={{ py: 4 }}>
+            <Container maxWidth="md">{children}</Container>
+          </Box>
+        </AuthProvider>
       </body>
     </html>
   );

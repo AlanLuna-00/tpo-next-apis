@@ -2,6 +2,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 const AuthContext = createContext();
 
@@ -10,27 +11,32 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [role, setRole] = useState(null);
   const [token, setToken] = useState(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    const userCookie = Cookies.get('user');
     const tokenCookie = Cookies.get('token');
+    const roleCookie = Cookies.get('role');
 
-    if (userCookie && tokenCookie) {
-      setUser(JSON.parse(userCookie));
+    if (tokenCookie) {
+      setRole(roleCookie);
       setToken(tokenCookie);
     } else {
       router.push('/auth/login');
     }
-  }, [router]);
+    setLoading(false);
+  }, [pathname]);
+
+  if (loading) {
+    return null;
+  }
 
   const value = {
-    user,
+    role,
     token,
-    setUser,
-    setToken,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -1,4 +1,12 @@
-import { Card, CardContent, CardActions, Typography, Button, CircularProgress, Box } from '@mui/material';
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Typography,
+  Button,
+  CircularProgress,
+  Box,
+} from '@mui/material';
 
 const DetailProduct = ({ product, onAddToCart, isLoading }) => {
   if (isLoading) {
