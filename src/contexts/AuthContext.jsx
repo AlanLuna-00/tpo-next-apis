@@ -27,8 +27,13 @@ export const AuthProvider = ({ children }) => {
     } else {
       router.push('/auth/login');
     }
+
+    if (roleCookie !== 'admin' && pathname.startsWith('/backoffice')) {
+      router.push('/');
+    }
+
     setLoading(false);
-  }, [pathname]);
+  }, [pathname, router]);
 
   if (loading) {
     return null;
