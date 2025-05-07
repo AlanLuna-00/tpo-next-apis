@@ -16,15 +16,20 @@ import { useAuth } from '@/contexts/AuthContext';
 import { usePathname } from 'next/navigation';
 import useLogout from '@/hooks/auth/useLogout';
 import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Badge from '@mui/material/Badge';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Divider from '@mui/material/Divider';
+import { useCart } from '@/contexts/CartContext';
 
 export default function Navbar() {
 <<<<<<< Updated upstream
   const [isClient, setIsClient] = useState(false);
   const [open, setOpen] = useState(false);
-<<<<<<< Updated upstream
-  const pathname = usePathname();
-  const { logout, isLoggingOut } = useLogout();
-=======
   const [cartAnchorEl, setCartAnchorEl] = useState(null);
   const pathname = usePathname();
   const { logout, isLoggingOut } = useLogout();
@@ -39,7 +44,6 @@ export default function Navbar() {
 
 >>>>>>> Stashed changes
   const { cart, removeFromCart } = useCart();
->>>>>>> Stashed changes
 
   const { role, token } = useAuth();
 <<<<<<< Updated upstream
@@ -80,12 +84,15 @@ export default function Navbar() {
     logout();
   };
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 =======
 =======
 
 >>>>>>> Stashed changes
+=======
+>>>>>>> 47b6d6c9cd60108a2a64d1a324b04ce8dda4c8c3
   const handleCartClick = (event) => {
     setCartAnchorEl(event.currentTarget);
   };
@@ -102,7 +109,6 @@ export default function Navbar() {
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
->>>>>>> Stashed changes
   const isLoggedIn = !!token;
 
 =======
@@ -149,14 +155,6 @@ export default function Navbar() {
         </Box>
 
         {isLoggedIn && (
-<<<<<<< Updated upstream
-          <IconButton edge="end" color="inherit" onClick={handleClickOpen}>
-            <AccountCircle />
-          </IconButton>
-        )}
-      </Toolbar>
-
-=======
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
 <<<<<<< Updated upstream
 =======
@@ -252,11 +250,14 @@ export default function Navbar() {
         )}
       </Menu>
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 >>>>>>> Stashed changes
 =======
       {}
 >>>>>>> Stashed changes
+=======
+>>>>>>> 47b6d6c9cd60108a2a64d1a324b04ce8dda4c8c3
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Confirmar Cierre de Sesión</DialogTitle>
         <DialogContent>
