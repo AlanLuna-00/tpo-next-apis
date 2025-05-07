@@ -16,8 +16,15 @@ import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material
 export default function Navbar() {
   const [isClient, setIsClient] = useState(false);
   const [open, setOpen] = useState(false);
+<<<<<<< Updated upstream
   const pathname = usePathname();
   const { logout, isLoggingOut } = useLogout();
+=======
+  const [cartAnchorEl, setCartAnchorEl] = useState(null);
+  const pathname = usePathname();
+  const { logout, isLoggingOut } = useLogout();
+  const { cart, removeFromCart } = useCart();
+>>>>>>> Stashed changes
 
   const { role, token } = useAuth();
   const showBackoffice = role === 'admin';
@@ -39,6 +46,20 @@ export default function Navbar() {
     logout();
   };
 
+<<<<<<< Updated upstream
+=======
+  const handleCartClick = (event) => {
+    setCartAnchorEl(event.currentTarget);
+  };
+
+  const handleCartClose = () => {
+    setCartAnchorEl(null);
+  };
+
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+>>>>>>> Stashed changes
   const isLoggedIn = !!token;
 
   if (!isClient) {
@@ -75,12 +96,84 @@ export default function Navbar() {
         </Box>
 
         {isLoggedIn && (
+<<<<<<< Updated upstream
           <IconButton edge="end" color="inherit" onClick={handleClickOpen}>
             <AccountCircle />
           </IconButton>
         )}
       </Toolbar>
 
+=======
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <IconButton 
+              color="inherit" 
+              onClick={handleCartClick}
+              sx={{ mr: 1 }}
+            >
+              <Badge badgeContent={totalItems} color="error">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+
+            <IconButton edge="end" color="inherit" onClick={handleClickOpen}>
+              <AccountCircle />
+            </IconButton>
+          </Box>
+        )}
+      </Toolbar>
+
+      <Menu
+        anchorEl={cartAnchorEl}
+        open={Boolean(cartAnchorEl)}
+        onClose={handleCartClose}
+        PaperProps={{
+          sx: { width: 320, maxHeight: 400 }
+        }}
+      >
+        {cart.length === 0 ? (
+          <MenuItem disabled>El carrito está vacío</MenuItem>
+        ) : (
+          <>
+            {cart.map((item) => (
+              <MenuItem key={item.id} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <ListItemText 
+                    primary={item.name} 
+                    secondary={`Cantidad: ${item.quantity}`} 
+                  />
+                  <Typography variant="body2">
+                    ${item.price * item.quantity}
+                  </Typography>
+                </Box>
+                <ListItemIcon>
+                  <IconButton 
+                    edge="end" 
+                    onClick={() => removeFromCart(item.id)}
+                    size="small"
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </ListItemIcon>
+              </MenuItem>
+            ))}
+            <Divider />
+            <MenuItem sx={{ justifyContent: 'space-between' }}>
+              <Typography variant="subtitle1">Total:</Typography>
+              <Typography variant="subtitle1">${totalPrice}</Typography>
+            </MenuItem>
+            <MenuItem 
+              component={Link} 
+              href="/cart"
+              onClick={handleCartClose}
+              sx={{ justifyContent: 'center' }}
+            >
+              Ver carrito
+            </MenuItem>
+          </>
+        )}
+      </Menu>
+
+>>>>>>> Stashed changes
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Confirmar Cierre de Sesión</DialogTitle>
         <DialogContent>
