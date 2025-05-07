@@ -1,8 +1,4 @@
 'use client';
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 import React, { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -27,100 +23,33 @@ import Divider from '@mui/material/Divider';
 import { useCart } from '@/contexts/CartContext';
 
 export default function Navbar() {
-<<<<<<< Updated upstream
   const [isClient, setIsClient] = useState(false);
   const [open, setOpen] = useState(false);
-  const [cartAnchorEl, setCartAnchorEl] = useState(null);
   const pathname = usePathname();
   const { logout, isLoggingOut } = useLogout();
-=======
-
-  const [isClient, setIsClient] = useState(false);
-  const [open, setOpen] = useState(false);
-
-  const [cartAnchorEl, setCartAnchorEl] = useState(null);
-  const pathname = usePathname();
-  const { logout, isLoggingOut } = useLogout();
-
->>>>>>> Stashed changes
+  const { role, token } = useAuth();
+  const showBackoffice = role === 'admin';
   const { cart, removeFromCart } = useCart();
 
-  const { role, token } = useAuth();
-<<<<<<< Updated upstream
-  const showBackoffice = role === 'admin';
-
-=======
-
-  const showBackoffice = role === 'admin';
-
-
->>>>>>> Stashed changes
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
   const handleClose = () => {
     setOpen(false);
   };
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
   const handleLogout = () => {
     handleClose();
     logout();
   };
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
-
->>>>>>> Stashed changes
-=======
->>>>>>> 47b6d6c9cd60108a2a64d1a324b04ce8dda4c8c3
-  const handleCartClick = (event) => {
-    setCartAnchorEl(event.currentTarget);
-  };
-
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
-  const handleCartClose = () => {
-    setCartAnchorEl(null);
-  };
-
-<<<<<<< Updated upstream
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
   const isLoggedIn = !!token;
 
-=======
-
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-
-  const isLoggedIn = !!token;
-
-
->>>>>>> Stashed changes
   if (!isClient) {
     return null;
   }
@@ -156,24 +85,16 @@ export default function Navbar() {
 
         {isLoggedIn && (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-<<<<<<< Updated upstream
-=======
-            {}
->>>>>>> Stashed changes
             <IconButton 
               color="inherit" 
-              onClick={handleCartClick}
+              onClick={handleClickOpen}
               sx={{ mr: 1 }}
             >
-              <Badge badgeContent={totalItems} color="error">
+              <Badge badgeContent={cart.reduce((sum, item) => sum + item.quantity, 0)} color="error">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
 
-<<<<<<< Updated upstream
-=======
-            {}
->>>>>>> Stashed changes
             <IconButton edge="end" color="inherit" onClick={handleClickOpen}>
               <AccountCircle />
             </IconButton>
@@ -181,10 +102,6 @@ export default function Navbar() {
         )}
       </Toolbar>
 
-<<<<<<< Updated upstream
-=======
-      {}
->>>>>>> Stashed changes
       <Menu
         anchorEl={cartAnchorEl}
         open={Boolean(cartAnchorEl)}
@@ -194,12 +111,7 @@ export default function Navbar() {
         {cart.length === 0 ? (
           <MenuItem disabled>El carrito está vacío</MenuItem>
         ) : (
-<<<<<<< Updated upstream
-          <>
-=======
           <Box>
-            {}
->>>>>>> Stashed changes
             {cart.map((item) => (
               <MenuItem key={item.id} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -223,21 +135,6 @@ export default function Navbar() {
               </MenuItem>
             ))}
             <Divider />
-<<<<<<< Updated upstream
-            <MenuItem sx={{ justifyContent: 'space-between' }}>
-              <Typography variant="subtitle1">Total:</Typography>
-              <Typography variant="subtitle1">${totalPrice}</Typography>
-            </MenuItem>
-=======
-            {}
-            <MenuItem>
-              <ListItemText 
-                primary={`Total: $${totalPrice}`}
-                slotProps={{ primary: { sx: { fontWeight: 'bold' } } }}
-              />
-            </MenuItem>
-            {}
->>>>>>> Stashed changes
             <MenuItem 
               component={Link} 
               href="/cart"
@@ -246,18 +143,10 @@ export default function Navbar() {
             >
               Ver carrito
             </MenuItem>
-          </>
+          </Box>
         )}
       </Menu>
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
-      {}
->>>>>>> Stashed changes
-=======
->>>>>>> 47b6d6c9cd60108a2a64d1a324b04ce8dda4c8c3
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Confirmar Cierre de Sesión</DialogTitle>
         <DialogContent>
