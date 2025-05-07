@@ -12,19 +12,23 @@ import { useAuth } from '@/contexts/AuthContext';
 import { usePathname } from 'next/navigation';
 import useLogout from '@/hooks/auth/useLogout';
 import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Badge from '@mui/material/Badge';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Divider from '@mui/material/Divider';
+import { useCart } from '@/contexts/CartContext';
 
 export default function Navbar() {
   const [isClient, setIsClient] = useState(false);
   const [open, setOpen] = useState(false);
-<<<<<<< Updated upstream
-  const pathname = usePathname();
-  const { logout, isLoggingOut } = useLogout();
-=======
   const [cartAnchorEl, setCartAnchorEl] = useState(null);
   const pathname = usePathname();
   const { logout, isLoggingOut } = useLogout();
   const { cart, removeFromCart } = useCart();
->>>>>>> Stashed changes
 
   const { role, token } = useAuth();
   const showBackoffice = role === 'admin';
@@ -46,8 +50,6 @@ export default function Navbar() {
     logout();
   };
 
-<<<<<<< Updated upstream
-=======
   const handleCartClick = (event) => {
     setCartAnchorEl(event.currentTarget);
   };
@@ -59,7 +61,6 @@ export default function Navbar() {
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
->>>>>>> Stashed changes
   const isLoggedIn = !!token;
 
   if (!isClient) {
@@ -96,14 +97,6 @@ export default function Navbar() {
         </Box>
 
         {isLoggedIn && (
-<<<<<<< Updated upstream
-          <IconButton edge="end" color="inherit" onClick={handleClickOpen}>
-            <AccountCircle />
-          </IconButton>
-        )}
-      </Toolbar>
-
-=======
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <IconButton 
               color="inherit" 
@@ -173,7 +166,6 @@ export default function Navbar() {
         )}
       </Menu>
 
->>>>>>> Stashed changes
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Confirmar Cierre de Sesión</DialogTitle>
         <DialogContent>
