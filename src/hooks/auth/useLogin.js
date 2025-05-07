@@ -24,6 +24,7 @@ const useLogin = () => {
         setToken(generatedToken);
         Cookies.set('role', loggedInUser.role, { expires: 1 });
         Cookies.set('token', generatedToken, { expires: 1 });
+        Cookies.set('userId', loggedInUser.id, { expires: 1 });
         router.push('/');
       } else {
         setError('Crendenciales incorrectas');

@@ -7,6 +7,10 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
@@ -14,6 +18,10 @@ export function CartProvider({ children }) {
     }
   }, []);
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);

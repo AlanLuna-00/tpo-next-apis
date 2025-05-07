@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const tokenCookie = Cookies.get('token');
     const roleCookie = Cookies.get('role');
+    const userIdCookie = Cookies.get('userId');
 
     if (tokenCookie) {
       setRole(roleCookie);
@@ -48,6 +49,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     role,
     token,
+    userId: Cookies.get('userId') || null,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

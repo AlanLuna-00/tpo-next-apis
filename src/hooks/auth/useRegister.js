@@ -27,6 +27,7 @@ const useRegister = () => {
         setToken(generatedToken);
         Cookies.set('role', registeredUser.role, { expires: 1 });
         Cookies.set('token', generatedToken, { expires: 1 });
+        Cookies.set('userId', registeredUser.id, { expires: 1 });
         router.push('/');
       }
     } catch (err) {

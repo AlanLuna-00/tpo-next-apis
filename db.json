@@ -11,6 +11,21 @@
       "email": "user@example.com",
       "password": "test123",
       "role": "user"
+<<<<<<< Updated upstream
+=======
+    },
+    {
+      "id": "4762",
+      "email": "lalo1234",
+      "password": "123456",
+      "role": "user"
+    },
+    {
+      "id": "57aa",
+      "email": "tobias1234",
+      "password": "123456",
+      "role": "user"
+>>>>>>> Stashed changes
     }
   ],
   "products": [
@@ -27,6 +42,20 @@
       "price": 200,
       "description": "Descripción del producto 2",
       "stock": 5
+    },
+    {
+      "id": "3",
+      "name": "Coca Cola 1.5L",
+      "price": 2149.99,
+      "description": "Botella de Coca Cola de 1.5L",
+      "stock": 2
+    },
+    {
+      "id": "b863",
+      "name": "Coca Cola 2L",
+      "price": 5000,
+      "description": "Botella de Coca Cola de 2L",
+      "stock": 5
     }
   ],
   "carts": [
@@ -35,6 +64,51 @@
       "userId": 2,
       "items": [
         { "productId": 1, "quantity": 2 }
+      ]
+    },
+    {
+      "id": "e402",
+      "userId": "4762",
+      "items": [
+        {
+          "id": "b863",
+          "name": "Coca Cola 2L",
+          "price": 5000,
+          "description": "Botella de Coca Cola de 2L",
+          "stock": 5,
+          "quantity": 1,
+          "productId": "b863"
+        }
+      ]
+    },
+    {
+      "id": "fa4d",
+      "userId": "57aa",
+      "items": [
+        {
+          "id": "1",
+          "name": "Producto 1",
+          "price": 100,
+          "description": "Descripción del producto 1",
+          "stock": 10,
+          "quantity": 1,
+          "productId": "1"
+        }
+      ]
+    },
+    {
+      "id": "657b",
+      "userId": "4762",
+      "items": [
+        {
+          "id": "b863",
+          "name": "Coca Cola 2L",
+          "price": 5000,
+          "description": "Botella de Coca Cola de 2L",
+          "stock": 5,
+          "quantity": 1,
+          "productId": "b863"
+        }
       ]
     }
   ]
