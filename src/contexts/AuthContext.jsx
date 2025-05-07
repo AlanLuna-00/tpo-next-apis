@@ -24,11 +24,17 @@ export const AuthProvider = ({ children }) => {
     if (tokenCookie) {
       setRole(roleCookie);
       setToken(tokenCookie);
-    } else {
-      router.push('/auth/login');
     }
 
     if (roleCookie !== 'admin' && pathname.startsWith('/backoffice')) {
+      router.push('/');
+    }
+
+    if (!tokenCookie && pathname !== '/auth/login' && pathname !== '/auth/register') {
+      router.push('/auth/login');
+    }
+
+    if (tokenCookie && (pathname === '/auth/login' || pathname === '/auth/register')) {
       router.push('/');
     }
 

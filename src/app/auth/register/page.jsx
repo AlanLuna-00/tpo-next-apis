@@ -1,21 +1,18 @@
 'use client';
 import React, { useState } from 'react';
 import { TextField, Button, CircularProgress, Snackbar } from '@mui/material';
-import useLogin from '@/hooks/auth/useLogin';
+import useRegister from '@/hooks/auth/useRegister';
 import Link from 'next/link';
 
-const LoginPage = () => {
-  const { login, error, user, token } = useLogin();
+const RegisterPage = () => {
+  const { register, error, isLoading } = useRegister();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
-  const handleLogin = async e => {
+  const handleRegister = async e => {
     e.preventDefault();
-    setIsLoading(true);
-    await login(email, password);
-    setIsLoading(false);
+    await register(email, password);
 
     if (error) {
       setOpenSnackbar(true);
@@ -24,16 +21,16 @@ const LoginPage = () => {
 
   return (
     <div>
-      <h2>Login</h2>
+      <h2>Register</h2>
 
       <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={() => setOpenSnackbar(false)}
-        message={error || 'Usuario logueado satisfactoriamente'}
+        message={error || 'Usuario registrado satisfactoriamente'}
       />
 
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleRegister}>
         <TextField
           fullWidth
           label="Email"
@@ -53,15 +50,15 @@ const LoginPage = () => {
         />
 
         <Button type="submit" variant="contained" color="primary" fullWidth disabled={isLoading}>
-          {isLoading ? <CircularProgress size={24} /> : 'Login'}
+          {isLoading ? <CircularProgress size={24} /> : 'Register'}
         </Button>
       </form>
       <div style={{ marginTop: '10px', textAlign: 'center' }}>
-        <span>¿No tienes cuenta? </span>
-        <Link href="/auth/register">Regístrate aquí</Link>
+        <span>¿Ya tienes cuenta? </span>
+        <Link href="/auth/login">Inicia sesión aquí</Link>
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

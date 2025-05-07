@@ -19,7 +19,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const { logout, isLoggingOut } = useLogout();
 
-  const { role } = useAuth();
+  const { role, token } = useAuth();
   const showBackoffice = role === 'admin';
 
   useEffect(() => {
@@ -39,9 +39,12 @@ export default function Navbar() {
     logout();
   };
 
-  if (!isClient || pathname === '/auth/login') {
+  const isLoggedIn = !!token;
+
+  if (!isClient) {
     return null;
   }
+
   return (
     <AppBar position="static" color="primary">
       <Toolbar>
@@ -49,24 +52,33 @@ export default function Navbar() {
           <Typography variant="h6" component="div">
             APIS - UADE
           </Typography>
+
           <Button color="inherit" component={Link} href="/">
             Home
           </Button>
-          <Button color="inherit" component={Link} href="/products">
-            Productos
-          </Button>
-          <Button color="inherit" component={Link} href="/cart/123">
-            Carrito
-          </Button>
-          {showBackoffice && (
-            <Button color="inherit" component={Link} href="/backoffice">
-              Backoffice (Only Admin)
-            </Button>
+
+          {isLoggedIn && (
+            <>
+              <Button color="inherit" component={Link} href="/products">
+                Productos
+              </Button>
+              <Button color="inherit" component={Link} href="/cart/123">
+                Carrito
+              </Button>
+              {showBackoffice && (
+                <Button color="inherit" component={Link} href="/backoffice">
+                  Backoffice (Only Admin)
+                </Button>
+              )}
+            </>
           )}
         </Box>
-        <IconButton edge="end" color="inherit" onClick={handleClickOpen}>
-          <AccountCircle />
-        </IconButton>
+
+        {isLoggedIn && (
+          <IconButton edge="end" color="inherit" onClick={handleClickOpen}>
+            <AccountCircle />
+          </IconButton>
+        )}
       </Toolbar>
 
       <Dialog open={open} onClose={handleClose}>
