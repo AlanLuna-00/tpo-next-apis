@@ -11,8 +11,6 @@
       "email": "user@example.com",
       "password": "test123",
       "role": "user"
-<<<<<<< Updated upstream
-=======
     },
     {
       "id": "4762",
@@ -25,7 +23,6 @@
       "email": "tobias1234",
       "password": "123456",
       "role": "user"
->>>>>>> Stashed changes
     }
   ],
   "products": [
