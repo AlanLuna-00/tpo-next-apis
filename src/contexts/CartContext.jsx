@@ -7,10 +7,6 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
@@ -18,29 +14,23 @@ export function CartProvider({ children }) {
     }
   }, []);
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
-  const addToCart = (product) => {
+  const addToCart = product => {
     setCart(prevCart => {
       const existingItem = prevCart.find(item => item.id === product.id);
       if (existingItem) {
         return prevCart.map(item =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + product.quantity }
-            : item
+          item.id === product.id ? { ...item, quantity: item.quantity + product.quantity } : item
         );
       }
       return [...prevCart, product];
     });
   };
 
-  const removeFromCart = (productId) => {
+  const removeFromCart = productId => {
     setCart(prevCart => prevCart.filter(item => item.id !== productId));
   };
 
@@ -49,12 +39,7 @@ export function CartProvider({ children }) {
   };
 
   return (
-    <CartContext.Provider value={{
-      cart,
-      addToCart,
-      removeFromCart,
-      clearCart
-    }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
       {children}
     </CartContext.Provider>
   );
@@ -66,4 +51,4 @@ export function useCart() {
     throw new Error('useCart debe ser usado dentro de un CartProvider');
   }
   return context;
-} 
+}

@@ -7,6 +7,7 @@ import './globals.css';
 import Navbar from '@/components/navbar/Navbar';
 import { CssBaseline, Box, Container } from '@mui/material';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { CartProvider } from '@/contexts/CartContext';
 
 export const metadata = {
   title: 'TPO APIS UADE',
@@ -24,11 +25,13 @@ export default function RootLayout({ children }) {
       </head>
       <body className="font-roboto antialiased">
         <AuthProvider>
-          <CssBaseline />
-          <Navbar />
-          <Box component="main" sx={{ py: 4 }}>
-            <Container maxWidth="md">{children}</Container>
-          </Box>
+          <CartProvider>
+            <CssBaseline />
+            <Navbar />
+            <Box component="main" sx={{ py: 4 }}>
+              <Container maxWidth="md">{children}</Container>
+            </Box>
+          </CartProvider>
         </AuthProvider>
       </body>
     </html>

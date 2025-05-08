@@ -1,35 +1,42 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Link from 'next/link';
-import { useAuth } from '@/contexts/AuthContext';
-import { usePathname } from 'next/navigation';
-import useLogout from '@/hooks/auth/useLogout';
-import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Badge from '@mui/material/Badge';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import DeleteIcon from '@mui/icons-material/Delete';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Link from 'next/link';
 import Divider from '@mui/material/Divider';
 import { useCart } from '@/contexts/CartContext';
+import { usePathname } from 'next/navigation';
+import useLogout from '@/hooks/auth/useLogout';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Navbar() {
   const [isClient, setIsClient] = useState(false);
   const [open, setOpen] = useState(false);
+  const [cartAnchorEl, setCartAnchorEl] = useState(null);
+
   const pathname = usePathname();
   const { logout, isLoggingOut } = useLogout();
-  const { role, token } = useAuth();
-  const showBackoffice = role === 'admin';
   const { cart, removeFromCart } = useCart();
+  const { role, token } = useAuth();
+
+  const showBackoffice = role === 'admin';
+  const isLoggedIn = !!token;
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   useEffect(() => {
     setIsClient(true);
@@ -48,99 +55,85 @@ export default function Navbar() {
     logout();
   };
 
-  const isLoggedIn = !!token;
+  const handleCartClick = event => {
+    setCartAnchorEl(event.currentTarget);
+  };
 
-  if (!isClient) {
-    return null;
-  }
+  const handleCartClose = () => {
+    setCartAnchorEl(null);
+  };
+
+  if (!isClient) return null;
 
   return (
-    <AppBar position="static" color="primary">
-      <Toolbar>
-        <Box sx={{ flexGrow: 1, display: 'flex', gap: 2 }}>
-          <Typography variant="h6" component="div">
-            APIS - UADE
-          </Typography>
+    <>
+      <AppBar position="static" color="primary">
+        <Toolbar>
+          <Box sx={{ flexGrow: 1, display: 'flex', gap: 2 }}>
+            <Typography variant="h6" component="div">
+              APIS - UADE
+            </Typography>
 
-          <Button color="inherit" component={Link} href="/">
-            Home
-          </Button>
+            <Button color="inherit" component={Link} href="/">
+              Home
+            </Button>
+
+            {isLoggedIn && (
+              <>
+                <Button color="inherit" component={Link} href="/products">
+                  Productos
+                </Button>
+                <Button color="inherit" component={Link} href="/cart/123">
+                  Carrito
+                </Button>
+                {showBackoffice && (
+                  <Button color="inherit" component={Link} href="/backoffice">
+                    Backoffice (Only Admin)
+                  </Button>
+                )}
+              </>
+            )}
+          </Box>
 
           {isLoggedIn && (
-            <>
-              <Button color="inherit" component={Link} href="/products">
-                Productos
-              </Button>
-              <Button color="inherit" component={Link} href="/cart/123">
-                Carrito
-              </Button>
-              {showBackoffice && (
-                <Button color="inherit" component={Link} href="/backoffice">
-                  Backoffice (Only Admin)
-                </Button>
-              )}
-            </>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <IconButton color="inherit" onClick={handleCartClick} sx={{ mr: 1 }}>
+                <Badge badgeContent={totalItems} color="error">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+
+              <IconButton edge="end" color="inherit" onClick={handleClickOpen}>
+                <AccountCircle />
+              </IconButton>
+            </Box>
           )}
-        </Box>
+        </Toolbar>
+      </AppBar>
 
-        {isLoggedIn && (
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <IconButton 
-              color="inherit" 
-              onClick={handleClickOpen}
-              sx={{ mr: 1 }}
-            >
-              <Badge badgeContent={cart.reduce((sum, item) => sum + item.quantity, 0)} color="error">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-
-            <IconButton edge="end" color="inherit" onClick={handleClickOpen}>
-              <AccountCircle />
-            </IconButton>
-          </Box>
-        )}
-      </Toolbar>
-
-      <Menu
-        anchorEl={cartAnchorEl}
-        open={Boolean(cartAnchorEl)}
-        onClose={handleCartClose}
-        slotProps={{ paper: { sx: { width: 320, maxHeight: 400 } } }}
-      >
+      <Menu anchorEl={cartAnchorEl} open={Boolean(cartAnchorEl)} onClose={handleCartClose}>
         {cart.length === 0 ? (
           <MenuItem disabled>El carrito está vacío</MenuItem>
         ) : (
           <Box>
-            {cart.map((item) => (
-              <MenuItem key={item.id} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            {cart.map(item => (
+              <MenuItem
+                key={item.id}
+                sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+              >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <ListItemText 
-                    primary={item.name} 
-                    secondary={`Cantidad: ${item.quantity}`} 
-                  />
-                  <Typography variant="body2">
-                    ${item.price * item.quantity}
-                  </Typography>
+                  <Typography>{item.name}</Typography>
+                  <Typography>x{item.quantity}</Typography>
                 </Box>
-                <ListItemIcon>
-                  <IconButton 
-                    edge="end" 
-                    onClick={() => removeFromCart(item.id)}
-                    size="small"
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemIcon>
+                <Typography>${item.price * item.quantity}</Typography>
               </MenuItem>
             ))}
             <Divider />
-            <MenuItem 
-              component={Link} 
-              href="/cart"
-              onClick={handleCartClose}
-              sx={{ justifyContent: 'center' }}
-            >
+            <MenuItem sx={{ justifyContent: 'space-between' }}>
+              <Typography variant="subtitle1">Total:</Typography>
+              <Typography variant="subtitle1">${totalPrice}</Typography>
+            </MenuItem>
+            <MenuItem component={Link} href="/cart">
               Ver carrito
             </MenuItem>
           </Box>
@@ -161,6 +154,6 @@ export default function Navbar() {
           </Button>
         </DialogActions>
       </Dialog>
-    </AppBar>
+    </>
   );
 }

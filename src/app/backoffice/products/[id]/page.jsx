@@ -1,28 +1,24 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { 
-  TextField, 
-  Button, 
-  Paper, 
-  Typography,
-  Box
-} from '@mui/material';
-import { useRouter } from 'next/navigation';
+import { TextField, Button, Paper, Typography, Box } from '@mui/material';
+import { useParams, useRouter } from 'next/navigation';
 
-export default function EditProduct({ params }) {
+export default function EditProduct({}) {
+  const { id } = useParams();
+
   const router = useRouter();
   const [formData, setFormData] = useState({
     name: '',
     price: '',
     description: '',
-    stock: ''
+    stock: '',
   });
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/products/${params.id}`);
+        const response = await fetch(`http://localhost:3001/products/${id}`);
         const data = await response.json();
         setFormData(data);
       } catch (error) {
@@ -33,18 +29,18 @@ export default function EditProduct({ params }) {
     fetchProduct();
   }, [params.id]);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3001/products/${params.id}`, {
+      const response = await fetch(`http://localhost:3001/products/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -110,17 +106,10 @@ export default function EditProduct({ params }) {
             />
 
             <Box className="flex justify-end space-x-4">
-              <Button 
-                variant="outlined" 
-                onClick={() => router.push('/backoffice/products')}
-              >
+              <Button variant="outlined" onClick={() => router.push('/backoffice/products')}>
                 Cancelar
               </Button>
-              <Button 
-                type="submit" 
-                variant="contained" 
-                color="primary"
-              >
+              <Button type="submit" variant="contained" color="primary">
                 Guardar Cambios
               </Button>
             </Box>
