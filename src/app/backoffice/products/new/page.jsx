@@ -1,15 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { 
-  TextField, 
-  Button, 
-  Paper, 
-  Typography,
-  Box,
-  Alert,
-  CircularProgress
-} from '@mui/material';
+import { TextField, Button, Paper, Typography, Box, Alert, CircularProgress } from '@mui/material';
 import { useRouter } from 'next/navigation';
 
 export default function NewProduct() {
@@ -20,14 +12,14 @@ export default function NewProduct() {
     name: '',
     price: '',
     description: '',
-    stock: ''
+    stock: '',
   });
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -38,7 +30,7 @@ export default function NewProduct() {
     return null;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const validationError = validateForm();
     if (validationError) {
@@ -51,23 +43,19 @@ export default function NewProduct() {
       setError(null);
       const response = await fetch('http://localhost:3001/products', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
           price: Number(formData.price),
-          stock: Number(formData.stock)
+          stock: Number(formData.stock),
         }),
       });
 
-      if (!response.ok) {
-        throw new Error('Error al crear el producto');
-      }
+      if (!response.ok) throw new Error('Error al crear el producto');
 
       router.push('/backoffice/products');
     } catch (error) {
-      console.error('Error creating product:', error);
+      console.error(error);
       setError('No se pudo crear el producto. Por favor, intente nuevamente.');
     } finally {
       setLoading(false);
@@ -75,32 +63,30 @@ export default function NewProduct() {
   };
 
   return (
-    <div className="p-6">
-      <Typography variant="h4" className="mb-6">
+    <Box sx={{ px: { xs: 1, md: 2 }, py: 2 }}>
+      <Typography variant="h5" fontWeight={700} gutterBottom>
         Nuevo Producto
       </Typography>
 
-      <Paper className="p-6">
+      <Paper elevation={2} sx={{ p: 4, borderRadius: 3 }}>
         {error && (
-          <Alert severity="error" className="mb-4">
+          <Alert severity="error" sx={{ mb: 2 }}>
             {error}
           </Alert>
         )}
 
         <form onSubmit={handleSubmit}>
-          <Box className="space-y-4">
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             <TextField
-              fullWidth
               label="Nombre"
               name="name"
               value={formData.name}
               onChange={handleChange}
               required
               disabled={loading}
-            />
-
-            <TextField
               fullWidth
+            />
+            <TextField
               label="Precio"
               name="price"
               type="number"
@@ -108,23 +94,21 @@ export default function NewProduct() {
               onChange={handleChange}
               required
               disabled={loading}
-              slotProps={{ input: { min: 0, step: 0.01 } }}
-            />
-
-            <TextField
               fullWidth
+              inputProps={{ min: 0, step: 0.01 }}
+            />
+            <TextField
               label="Descripción"
               name="description"
-              multiline
-              rows={4}
               value={formData.description}
               onChange={handleChange}
               required
               disabled={loading}
-            />
-
-            <TextField
+              multiline
+              rows={4}
               fullWidth
+            />
+            <TextField
               label="Stock"
               name="stock"
               type="number"
@@ -132,21 +116,21 @@ export default function NewProduct() {
               onChange={handleChange}
               required
               disabled={loading}
-              slotProps={{ input: { min: 0 } }}
+              fullWidth
+              inputProps={{ min: 0 }}
             />
 
-            <Box className="flex justify-end space-x-4">
-              <Button 
-                variant="outlined" 
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+              <Button
+                variant="outlined"
                 onClick={() => router.push('/backoffice/products')}
                 disabled={loading}
               >
                 Cancelar
               </Button>
-              <Button 
-                type="submit" 
-                variant="contained" 
-                color="primary"
+              <Button
+                type="submit"
+                variant="contained"
                 disabled={loading}
                 startIcon={loading ? <CircularProgress size={20} /> : null}
               >
@@ -156,6 +140,6 @@ export default function NewProduct() {
           </Box>
         </form>
       </Paper>
-    </div>
+    </Box>
   );
-} 
+}

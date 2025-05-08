@@ -20,7 +20,6 @@ import Link from 'next/link';
 import Divider from '@mui/material/Divider';
 import { useCart } from '@/contexts/CartContext';
 import { usePathname } from 'next/navigation';
-import useLogout from '@/hooks/auth/useLogout';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function Navbar() {
@@ -28,13 +27,12 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [cartAnchorEl, setCartAnchorEl] = useState(null);
 
-  const pathname = usePathname();
-  const { logout, isLoggingOut } = useLogout();
-  const { cart, removeFromCart } = useCart();
-  const { role, token } = useAuth();
+  const { cart } = useCart();
+  const { role, token, logout } = useAuth();
 
-  const showBackoffice = role === 'admin';
   const isLoggedIn = !!token;
+  const showBackoffice = role === 'admin';
+
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -50,9 +48,9 @@ export default function Navbar() {
     setOpen(false);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     handleClose();
-    logout();
+    await logout();
   };
 
   const handleCartClick = event => {
@@ -149,8 +147,8 @@ export default function Navbar() {
           <Button onClick={handleClose} color="primary">
             Cancelar
           </Button>
-          <Button onClick={handleLogout} color="primary" disabled={isLoggingOut}>
-            {isLoggingOut ? 'Cerrando sesión...' : 'Cerrar Sesión'}
+          <Button onClick={handleLogout} color="primary">
+            Cerrar Sesión
           </Button>
         </DialogActions>
       </Dialog>

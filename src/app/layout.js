@@ -4,10 +4,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import './globals.css';
-import Navbar from '@/components/navbar/Navbar';
-import { CssBaseline, Box, Container } from '@mui/material';
-import { AuthProvider } from '@/contexts/AuthContext';
-import { CartProvider } from '@/contexts/CartContext';
+import Providers from '@/app/providers';
 
 export const metadata = {
   title: 'TPO APIS UADE',
@@ -16,23 +13,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html>
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
-      </head>
+    <html lang="es">
       <body className="font-roboto antialiased">
-        <AuthProvider>
-          <CartProvider>
-            <CssBaseline />
-            <Navbar />
-            <Box component="main" sx={{ py: 4 }}>
-              <Container maxWidth="md">{children}</Container>
-            </Box>
-          </CartProvider>
-        </AuthProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

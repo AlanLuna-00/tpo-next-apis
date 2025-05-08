@@ -1,17 +1,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
   TableRow,
   Paper,
   Typography,
   Chip,
   CircularProgress,
-  Alert
+  Alert,
+  Box,
 } from '@mui/material';
 
 export default function UsersList() {
@@ -43,25 +44,25 @@ export default function UsersList() {
 
   if (loading) {
     return (
-      <div className="p-6 flex justify-center items-center">
+      <Box sx={{ py: 6, display: 'flex', justifyContent: 'center' }}>
         <CircularProgress />
-      </div>
+      </Box>
     );
   }
 
   return (
-    <div className="p-6">
-      <Typography variant="h4" className="mb-6">
+    <Box sx={{ px: { xs: 1, md: 2 }, py: 2 }}>
+      <Typography variant="h5" fontWeight={700} gutterBottom>
         Usuarios
       </Typography>
 
       {error && (
-        <Alert severity="error" className="mb-4">
+        <Alert severity="error" sx={{ mb: 3 }}>
           {error}
         </Alert>
       )}
 
-      <Paper>
+      <Paper elevation={2} sx={{ borderRadius: 3 }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -78,14 +79,15 @@ export default function UsersList() {
                 </TableCell>
               </TableRow>
             ) : (
-              users.map((user) => (
+              users.map(user => (
                 <TableRow key={user.id}>
                   <TableCell>{user.id}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>
-                    <Chip 
-                      label={user.role} 
+                    <Chip
+                      label={user.role}
                       color={user.role === 'admin' ? 'primary' : 'default'}
+                      variant="outlined"
                     />
                   </TableCell>
                 </TableRow>
@@ -94,6 +96,6 @@ export default function UsersList() {
           </TableBody>
         </Table>
       </Paper>
-    </div>
+    </Box>
   );
 }

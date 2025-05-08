@@ -1,18 +1,11 @@
 'use client';
 
-import { 
-  AppBar, 
-  Toolbar, 
-  Typography, 
-  Button, 
-  Box,
-  Container
-} from '@mui/material';
-import { 
+import { Box, Typography, Button, Paper } from '@mui/material';
+import {
   Dashboard as DashboardIcon,
-  ShoppingCart as ProductsIcon,
+  Inventory2 as ProductsIcon,
   People as UsersIcon,
-  Receipt as OrdersIcon
+  ShoppingCart as OrdersIcon,
 } from '@mui/icons-material';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -24,41 +17,57 @@ export default function BackofficeLayout({ children }) {
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/backoffice' },
     { text: 'Productos', icon: <ProductsIcon />, path: '/backoffice/products' },
     { text: 'Usuarios', icon: <UsersIcon />, path: '/backoffice/users' },
-    { text: 'Órdenes', icon: <OrdersIcon />, path: '/backoffice/orders' }
+    { text: 'Carritos', icon: <OrdersIcon />, path: '/backoffice/orders' },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Backoffice
-          </Typography>
-          <Box sx={{ display: 'flex', gap: 2 }}>
-            {menuItems.map((item) => (
-              <Link 
-                key={item.path} 
-                href={item.path}
-                style={{ textDecoration: 'none' }}
-              >
-                <Button 
-                  color="inherit"
+    <Box sx={{ minHeight: '100vh', backgroundColor: '#fff' }}>
+      <Paper
+        elevation={2}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          px: 4,
+          py: 2,
+          mb: 4,
+          borderRadius: 2,
+        }}
+      >
+        <Typography variant="h6" fontWeight={600}>
+          Backoffice
+        </Typography>
+
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          {menuItems.map(item => {
+            const isActive = pathname === item.path;
+            return (
+              <Link key={item.path} href={item.path} passHref style={{ textDecoration: 'none' }}>
+                <Button
+                  variant={isActive ? 'contained' : 'outlined'}
+                  color={isActive ? 'primary' : 'inherit'}
                   startIcon={item.icon}
-                  sx={{ 
-                    backgroundColor: pathname === item.path ? 'rgba(255, 255, 255, 0.1)' : 'transparent'
+                  sx={{
+                    textTransform: 'none',
+                    fontWeight: 500,
+                    borderColor: isActive ? 'primary.main' : 'grey.300',
+                    bgcolor: isActive ? 'primary.main' : 'white',
+                    color: isActive ? 'white' : 'text.primary',
+                    '&:hover': {
+                      bgcolor: isActive ? 'primary.dark' : 'grey.100',
+                    },
                   }}
                 >
                   {item.text}
                 </Button>
               </Link>
-            ))}
-          </Box>
-        </Toolbar>
-      </AppBar>
-
-      <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+            );
+          })}
+        </Box>
+      </Paper>
+      <Paper elevation={2} sx={{ p: 2, borderRadius: 2 }}>
         {children}
-      </Container>
-    </div>
+      </Paper>
+    </Box>
   );
-} 
+}
