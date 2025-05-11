@@ -9,7 +9,7 @@ export default function ProductById({ params }) {
     return (
         <div>
             <h1>Product By Id</h1>
-            <DetailProduct product={product} onAddToCart={() => console.log("AddToCart")} isLoading={isLoading} />
+            <DetailProduct product={product} isLoading={isLoading} />
         </div>
     )
 }

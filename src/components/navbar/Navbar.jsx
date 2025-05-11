@@ -81,7 +81,7 @@ export default function Navbar() {
                 <Button color="inherit" component={Link} href="/products">
                   Productos
                 </Button>
-                <Button color="inherit" component={Link} href="/cart/123">
+                <Button color="inherit" component={Link} href="/cart">
                   Carrito
                 </Button>
                 {showBackoffice && (

@@ -7,8 +7,11 @@ import {
   CircularProgress,
   Box,
 } from '@mui/material';
+import { useCart } from '@/contexts/CartContext';
 
-const DetailProduct = ({ product, onAddToCart, isLoading }) => {
+const DetailProduct = ({ product, isLoading }) => {
+  const { addToCart } = useCart();
+
   if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
@@ -16,6 +19,18 @@ const DetailProduct = ({ product, onAddToCart, isLoading }) => {
       </Box>
     );
   }
+
+  const handleAddToCart = () => {
+    if (product) {
+      addToCart({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: 1,
+        productId: product.id
+      });
+    }
+  };
 
   return (
     <Card sx={{ maxWidth: 400, margin: '0 auto' }}>
@@ -37,7 +52,7 @@ const DetailProduct = ({ product, onAddToCart, isLoading }) => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => onAddToCart(product?.id)}
+          onClick={handleAddToCart}
           disabled={product?.stock <= 0}
           fullWidth
         >
