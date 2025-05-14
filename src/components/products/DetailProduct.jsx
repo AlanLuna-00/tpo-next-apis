@@ -27,7 +27,7 @@ const DetailProduct = ({ product, isLoading }) => {
         name: product.name,
         price: product.price,
         quantity: 1,
-        productId: product.id
+        productId: product.id,
       });
     }
   };
@@ -44,6 +44,14 @@ const DetailProduct = ({ product, isLoading }) => {
         <Typography variant="h6" sx={{ mt: 2 }}>
           Precio: ${product?.price}
         </Typography>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ mt: 1, fontWeight: 'bold', textTransform: 'capitalize' }}
+        >
+          Categoría: {product?.category}
+        </Typography>
+
         <Typography color={product?.stock > 0 ? 'text.primary' : 'error'}>
           Stock: {product?.stock > 0 ? product?.stock : 'Sin stock'}
         </Typography>

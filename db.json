@@ -1,13 +1,13 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "email": "admin@example.com",
       "password": "test123",
       "role": "admin"
     },
     {
-      "id": 2,
+      "id": "2",
       "email": "user@example.com",
       "password": "test123",
       "role": "user"
@@ -28,39 +28,54 @@
   "products": [
     {
       "id": "1",
-      "name": "Producto 1",
+      "name": "Producto Alan",
       "price": 100,
       "description": "Descripción del producto 1",
-      "stock": 10
+      "stock": 10,
+      "category": "otros"
     },
     {
       "id": "2",
       "name": "Producto 2",
       "price": 200,
       "description": "Descripción del producto 2",
-      "stock": 5
+      "stock": 5,
+      "category": "otros"
     },
     {
       "id": "3",
       "name": "Coca Cola 1.5L",
       "price": 2149.99,
       "description": "Botella de Coca Cola de 1.5L",
-      "stock": 2
+      "stock": 2,
+      "category": "bebidas"
     },
     {
       "id": "b863",
       "name": "Coca Cola 2L",
       "price": 5000,
       "description": "Botella de Coca Cola de 2L",
-      "stock": 5
+      "stock": 5,
+      "category": "bebidas"
+    },
+    {
+      "id": "aa3e",
+      "name": "Fardo",
+      "price": 100,
+      "description": "Messi",
+      "stock": 100,
+      "category": "otros"
     }
   ],
   "carts": [
     {
-      "id": 1,
+      "id": "1",
       "userId": 2,
       "items": [
-        { "productId": 1, "quantity": 2 }
+        {
+          "productId": 1,
+          "quantity": 2
+        }
       ]
     },
     {
