@@ -45,7 +45,7 @@ export function CartProvider({ children }) {
     const product = cart.find(item => item.id === productId);
     if (product) {
       await axios.patch(`http://localhost:3001/products/${productId}`, {
-        stock: data.stock + 1,
+        stock: data.stock + product.quantity,
       });
     }
   };
