@@ -1,58 +1,104 @@
 'use client'
 import useGetProducts from "@/hooks/products/useGetProducts";
-import React from "react";
+import React, { Suspense } from "react";
 import Image from "next/image";
 
+function ProductCard({ product }) {
+  return (
+    <article className='main__products__product' key={product.id}>
+      <div className='main__products__product__image__container'>
+        <Image 
+          src={product.url} 
+          alt={`Imagen de ${product.name}`}
+          width={300}
+          height={300}
+          loading="lazy"
+        />
+      </div>
+      <div>
+        <h3>{product.name}</h3>
+        <p className="product-price" aria-label={`Precio: ${product.price.toLocaleString()} pesos`}>
+          ${product.price.toLocaleString()}
+        </p>
+        <div className="product-rating" aria-label={`Calificación: ${product.rating || 5} de 5 estrellas`}>
+          <div role="img" aria-label={`${product.rating || 5} estrellas`}>★★★★★</div>
+          <span>({product.reviews || 5})</span>
+        </div>
+        <button 
+          className="add-to-cart-button"
+          aria-label={`Añadir ${product.name} al carrito`}
+          onClick={() => {
+            // TODO: Implementar lógica de añadir al carrito
+            console.log('Añadir al carrito:', product);
+          }}
+        >
+          Añadir al carrito
+        </button>
+      </div>
+    </article>
+  );
+}
+
+function ProductsList({ products }) {
+  return (
+    <div className="main__products--loaded">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </div>
+  );
+}
+
 export default function Home() {
-  const { products, loading } = useGetProducts();
+  const { products, loading, error } = useGetProducts();
 
   return (
     <div className="main__container">
-      <div className='main__banner'>
-        <img src='/banner.webp' />
+      <section className='main__banner' aria-label="Banner promocional">
+        <Image 
+          src='/banner.webp' 
+          alt="Banner promocional con ofertas especiales"
+          width={1920}
+          height={300}
+          priority
+        />
         <div>
           <div className="main__offers-container">
-            <h2 >¡Ofertas Especiales!</h2>
-            <p className="text-xl">Hasta 50% de descuento en productos seleccionados</p>
+            <h1>¡Ofertas Especiales!</h1>
+            <p>Hasta 50% de descuento en productos seleccionados</p>
           </div>
         </div>
-      </div>
-      <main className="main__products">
+      </section>
+
+      <section className="main__products" aria-label="Lista de productos">
         <h2 className="main__products-title">Nuestros Productos</h2>
-        {loading ? (
-          <div className="main__products--loading">
-            CARGANDO...
+        
+        <Suspense fallback={
+          <div className="main__products--loading" role="status" aria-label="Cargando productos">
+            <p>Cargando productos...</p>
           </div>
-        ) : (
-          <div className="main__products--loaded">
-            {products.map((product) => (
-              <div className='main__products__product' key={product.id}>
-                <div className='main__products__product__image__container'>
-                  <img src={product.url} />
-                </div>
-                <div>
-                  <h3>{product.name}</h3>
-                  <p>${product.price.toLocaleString()}</p>
-                  <div>
-                    <div>★★★★★</div>
-                    <span>(5)</span>
-                  </div>
-                  <button>
-                    Añadir al carrito
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </main>
-      <footer className="bg-gray-800 text-white py-8">
-        <div className="container mx-auto px-6 text-center">
+        }>
+          {error ? (
+            <div className="main__products--error" role="alert">
+              <p>Lo sentimos, hubo un error al cargar los productos. Por favor, intente nuevamente más tarde.</p>
+            </div>
+          ) : loading ? (
+            <div className="main__products--loading" role="status" aria-label="Cargando productos">
+              <p>Cargando productos...</p>
+            </div>
+          ) : (
+            <ProductsList products={products} />
+          )}
+        </Suspense>
+      </section>
+
+      <footer className="main-footer">
+        <div className="container">
           <p>© {new Date().getFullYear()} TPO APIS - Todos los derechos reservados</p>
-          <div className="flex justify-center space-x-6 mt-4">
-            <a href="#" className="hover:text-indigo-300">Términos y condiciones</a>
-            <a href="#" className="hover:text-indigo-300">Política de privacidad</a>
-          </div>
+          <nav aria-label="Enlaces legales">
+            <a href="/terminos" className="footer-link">Términos y condiciones</a>
+            <a href="/privacidad" className="footer-link">Política de privacidad</a>
+          </nav>
         </div>
       </footer>
     </div>
