@@ -13,6 +13,7 @@ export default function NewProduct() {
     price: '',
     description: '',
     stock: '',
+    category: '',
   });
 
   const handleChange = e => {
@@ -27,6 +28,7 @@ export default function NewProduct() {
     if (!formData.name.trim()) return 'El nombre es requerido';
     if (!formData.price || formData.price <= 0) return 'El precio debe ser mayor a 0';
     if (!formData.stock || formData.stock < 0) return 'El stock no puede ser negativo';
+    if (!formData.category || formData.category.trim() === '') return 'La categoría es requerida';
     return null;
   };
 
@@ -118,6 +120,15 @@ export default function NewProduct() {
               disabled={loading}
               fullWidth
               inputProps={{ min: 0 }}
+            />
+            <TextField
+              label="Categoría"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              required
+              disabled={loading}
+              fullWidth
             />
 
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
