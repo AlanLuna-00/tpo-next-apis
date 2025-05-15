@@ -2,4 +2,149 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+main {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100vh !important;
+    width: 100vw !important;
+    overflow: hidden;
+}
+
+body>main>div {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100vw;
+    height: 100vh;
+}
+
+body {
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.main__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw !important;
+    margin: 0 !important;
+    text-align: center;
+}
+
+.main__banner{
+    width: 100%;
+    height: 300px;
+    position: relative;
+}
+
+.main__banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.main__banner > div {
+    width: 100%;
+    padding-bottom: 40px;
+    position: absolute;
+    top: 35%;
+    color: #fff;
+}
+
+.main__banner>div h2 {
+    font-size: 40px;
+}
+
+.main__banner>div p {
+    font-size: 22px;
+}
+
+.main__offers button {
+    height: 40px;
+    padding: 10px;
+    border: none;
+    width: 50%;
+    border-radius: 5px;
+    box-shadow: 0px 0px 6px 0 #00000081;
+    margin-top: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: #222;
+    background-color: #ddd;
+}
+
+.main__offers button:hover {
+    background-color: #eee;
+}
+
+.main__products {
+    background-color: #ddd;
+}
+
+.main__products--loaded {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.main__products-title {
+    color: #222;
+    padding-top: 20px !important;
+}
+
+.main__products--loaded>div {
+    background-color: #eee;
+    width: 30%;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 5px;
+    padding: 20px;
+    max-width: 400px;
+    box-shadow: 0px 0px 6px 0 #00000081;
+    transition: transform 0.3s;
+}
+
+.main__products__product__image__container{
+    width: 250px;
+    height: 250px;
+    overflow: hidden !important;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px 0 #00000031;
+    margin-bottom: 20px;
+    background-color: #fff;
+}
+
+.main__products__product__image__container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.main__products--loaded>div:hover {
+    transform: scale(1.02);
+}
+
+.main__products--loaded>div>div {
+    width: 100%;
+}
+
+.main__products--loaded>div button {
+    height: 40px;
+    padding: 10px;
+    border: none;
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0px 0px 6px 0 #00000081;
+    margin-top: 16px;
+    cursor: pointer;
+
 }
