@@ -1,17 +1,26 @@
 'use client';
 
 import { useCart } from '@/contexts/CartContext';
-import { Container, Typography, Button, List, ListItem, ListItemText, IconButton, Box } from '@mui/material';
+import {
+  Container,
+  Typography,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  IconButton,
+  Box,
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function CartPage() {
-  const { cart, removeFromCart, clearCart } = useCart();
+  const { cart, removeFromCart, clearCart, checkoutCart } = useCart();
   const { userId } = useAuth();
   const router = useRouter();
 
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const saveCartToBackend = async () => {
     if (!userId) {
@@ -21,7 +30,7 @@ export default function CartPage() {
     const items = cart.map(item => ({
       ...item,
       id: item.id,
-      productId: item.productId ? item.productId : item.id
+      productId: item.productId ? item.productId : item.id,
     }));
     // Siempre crea una nueva orden (POST)
     await fetch('http://localhost:3001/carts', {
@@ -29,7 +38,7 @@ export default function CartPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, items }),
     });
-    clearCart();
+    checkoutCart();
     alert('¡Compra realizada!');
     router.push('/');
   };
@@ -40,10 +49,7 @@ export default function CartPage() {
         <Typography variant="h5" gutterBottom>
           Tu carrito está vacío
         </Typography>
-        <Button
-          variant="contained"
-          onClick={() => router.push('/products')}
-        >
+        <Button variant="contained" onClick={() => router.push('/products')}>
           Ver productos
         </Button>
       </Container>
@@ -55,9 +61,9 @@ export default function CartPage() {
       <Typography variant="h5" gutterBottom>
         Carrito de Compras
       </Typography>
-      
+
       <List>
-        {cart.map((item) => (
+        {cart.map(item => (
           <ListItem
             key={item.id}
             secondaryAction={
@@ -87,15 +93,10 @@ export default function CartPage() {
         >
           Proceder al Checkout
         </Button>
-        <Button
-          variant="outlined"
-          color="error"
-          fullWidth
-          onClick={clearCart}
-        >
+        <Button variant="outlined" color="error" fullWidth onClick={clearCart}>
           Vaciar Carrito
         </Button>
       </Box>
     </Container>
   );
-} 
+}

@@ -61,6 +61,10 @@ export function CartProvider({ children }) {
     });
   };
 
+  const checkoutCart = async () => {
+    setCart([]);
+  };
+
   return (
     <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
       {children}
