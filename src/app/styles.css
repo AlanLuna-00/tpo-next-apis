@@ -1,0 +1,8 @@
+.products-view{
+    width: 100vw !important;
+    display: flex;
+    padding: 40px;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+}
