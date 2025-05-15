@@ -12,7 +12,7 @@ export default function Providers({ children }) {
         <CssBaseline />
         <Navbar />
         <Box component="main" sx={{ py: 4 }}>
-          <Container maxWidth="md">{children}</Container>
+          <Container maxWidth="xl">{children}</Container>
         </Box>
       </CartProvider>
     </AuthProvider>
