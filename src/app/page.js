@@ -7,13 +7,15 @@ function ProductCard({ product }) {
   return (
     <article className="main__products__product" key={product.id}>
       <div className="main__products__product__image__container">
-        <Image
-          src={product.url}
-          alt={`Imagen de ${product.name}`}
-          width={300}
-          height={300}
-          loading="lazy"
-        />
+        {product.url && (
+          <Image
+            src={product.url}
+            alt={`Imagen de ${product.name}`}
+            width={300}
+            height={300}
+            loading="lazy"
+          />
+        )}
       </div>
       <div>
         <h3>{product.name}</h3>
@@ -29,16 +31,6 @@ function ProductCard({ product }) {
           </div>
           <span>({product.reviews || 5})</span>
         </div>
-        <button
-          className="add-to-cart-button"
-          aria-label={`Añadir ${product.name} al carrito`}
-          onClick={() => {
-            // TODO: Implementar lógica de añadir al carrito
-            console.log('Añadir al carrito:', product);
-          }}
-        >
-          Añadir al carrito
-        </button>
       </div>
     </article>
   );

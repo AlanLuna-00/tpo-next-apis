@@ -14,6 +14,7 @@ export default function NewProduct() {
     description: '',
     stock: '',
     category: '',
+    url: '',
   });
 
   const handleChange = e => {
@@ -29,6 +30,8 @@ export default function NewProduct() {
     if (!formData.price || formData.price <= 0) return 'El precio debe ser mayor a 0';
     if (!formData.stock || formData.stock < 0) return 'El stock no puede ser negativo';
     if (!formData.category || formData.category.trim() === '') return 'La categoría es requerida';
+    if (!formData.url || formData.url.trim() === '')
+      return 'La URL de la imagen es requerida o invalida';
     return null;
   };
 
@@ -125,6 +128,15 @@ export default function NewProduct() {
               label="Categoría"
               name="category"
               value={formData.category}
+              onChange={handleChange}
+              required
+              disabled={loading}
+              fullWidth
+            />
+            <TextField
+              label="URL de la imagen"
+              name="url"
+              value={formData.url}
               onChange={handleChange}
               required
               disabled={loading}
