@@ -9,9 +9,7 @@ import {
 } from '@mui/material';
 import { useCart } from '@/contexts/CartContext';
 
-const DetailProduct = ({ product, isLoading }) => {
-  const { addToCart } = useCart();
-
+const DetailProduct = ({ product, isLoading, addToCart }) => {
   if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
