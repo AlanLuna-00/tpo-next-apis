@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Paper, Typography, Box } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import { ShoppingCart, People, AttachMoney } from '@mui/icons-material';
 import StatCard from '@/components/backoffice/StatCard';
 

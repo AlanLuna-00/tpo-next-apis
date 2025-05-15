@@ -1,99 +1,60 @@
-'use client';
+'use client'
+import useGetProducts from "@/hooks/products/useGetProducts";
+import React from "react";
+import Image from "next/image";
 
-import { useState, useEffect } from 'react';
-import { Typography, Box } from '@mui/material';
-import { ShoppingCart, People, AttachMoney } from '@mui/icons-material';
-import StatCard from '@/components/backoffice/StatCard';
-
-export default function BackofficeDashboard() {
-  const [stats, setStats] = useState({
-    totalSales: 0,
-    activeUsers: 0,
-    pendingOrders: 0,
-  });
-
-  useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-        const usersRes = await fetch('http://localhost:3001/users');
-        const users = await usersRes.json();
-        const productsRes = await fetch('http://localhost:3001/products');
-        const products = await productsRes.json();
-        const cartsRes = await fetch('http://localhost:3001/carts');
-        const carts = await cartsRes.json();
-
-        let totalSales = 0;
-        carts.forEach(cart => {
-          cart.items.forEach(item => {
-            if (item.price && item.quantity) {
-              totalSales += item.price * item.quantity;
-            } else if (item.productId && item.quantity) {
-              const prod = products.find(p => p.id == item.productId);
-              if (prod?.price) {
-                totalSales += prod.price * item.quantity;
-              }
-            }
-          });
-        });
-
-        setStats({
-          totalSales,
-          activeUsers: users.length,
-          pendingOrders: carts.length,
-        });
-      } catch (error) {
-        console.error('Error fetching dashboard data:', error);
-      }
-    };
-
-    fetchDashboardData();
-  }, []);
-
-  const cardData = [
-    {
-      title: 'Ventas Totales',
-      value: `$${stats.totalSales}`,
-      icon: <AttachMoney />,
-      color: '#2e7d32',
-    },
-    {
-      title: 'Usuarios Activos',
-      value: stats.activeUsers,
-      icon: <People />,
-      color: '#1976d2',
-    },
-    {
-      title: 'Órdenes Pendientes',
-      value: stats.pendingOrders,
-      icon: <ShoppingCart />,
-      color: '#ef6c00',
-    },
-  ];
+export default function Home() {
+  const { products, loading } = useGetProducts();
 
   return (
-    <Box sx={{ px: { xs: 1, md: 2 }, py: 2 }}>
-      <Typography variant="h5" fontWeight={700} gutterBottom>
-        Dashboard
-      </Typography>
-
-      <Box
-        sx={{
-          display: 'flex',
-          gap: 3,
-          flexWrap: 'nowrap',
-          justifyContent: 'space-between',
-        }}
-      >
-        {cardData.map((card, index) => (
-          <StatCard
-            key={index}
-            title={card.title}
-            value={card.value}
-            icon={card.icon}
-            color={card.color}
-          />
-        ))}
-      </Box>
-    </Box>
+    <div className="main__container">
+      <div className='main__banner'>
+        <img src='/banner.webp' />
+        <div>
+          <div className="main__offers-container">
+            <h2 >¡Ofertas Especiales!</h2>
+            <p className="text-xl">Hasta 50% de descuento en productos seleccionados</p>
+          </div>
+        </div>
+      </div>
+      <main className="main__products">
+        <h2 className="main__products-title">Nuestros Productos</h2>
+        {loading ? (
+          <div className="main__products--loading">
+            CARGANDO...
+          </div>
+        ) : (
+          <div className="main__products--loaded">
+            {products.map((product) => (
+              <div className='main__products__product' key={product.id}>
+                <div className='main__products__product__image__container'>
+                  <img src={product.url} />
+                </div>
+                <div>
+                  <h3>{product.name}</h3>
+                  <p>${product.price.toLocaleString()}</p>
+                  <div>
+                    <div>★★★★★</div>
+                    <span>(5)</span>
+                  </div>
+                  <button>
+                    Añadir al carrito
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </main>
+      <footer className="bg-gray-800 text-white py-8">
+        <div className="container mx-auto px-6 text-center">
+          <p>© {new Date().getFullYear()} TPO APIS - Todos los derechos reservados</p>
+          <div className="flex justify-center space-x-6 mt-4">
+            <a href="#" className="hover:text-indigo-300">Términos y condiciones</a>
+            <a href="#" className="hover:text-indigo-300">Política de privacidad</a>
+          </div>
+        </div>
+      </footer>
+    </div>
   );
 }
