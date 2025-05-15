@@ -1,70 +1,72 @@
 {
   "users": [
     {
-      "id": "1",
+      "id": 1,
       "email": "admin@example.com",
       "password": "test123",
       "role": "admin"
     },
     {
-      "id": "2",
+      "id": 2,
       "email": "user@example.com",
       "password": "test123",
-      "role": "user"
-    },
-    {
-      "id": "4762",
-      "email": "lalo1234",
-      "password": "123456",
-      "role": "user"
-    },
-    {
-      "id": "57aa",
-      "email": "tobias1234",
-      "password": "123456",
       "role": "user"
     }
   ],
   "products": [
     {
       "id": "1",
-      "name": "Producto Alan",
-      "price": 100,
+      "name": "Macbook Pro",
+      "price": 1500,
       "description": "Descripción del producto 1",
-      "stock": 10,
-      "category": "otros"
+      "stock": 5,
+      "category": "otros",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoCxxKSxTtPEx0dxVf0Xktg0oUCZ4PfTzwoQ&s"
     },
     {
       "id": "2",
-      "name": "Producto 2",
-      "price": 200,
+      "name": "Iphone 14",
+      "price": 800,
       "description": "Descripción del producto 2",
-      "stock": 5,
-      "category": "otros"
+      "stock": 6,
+      "category": "otros",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCGn0N5jOZHd4F6atw6IDvrWTMmitxfPjNgA&s"
     },
     {
       "id": "3",
       "name": "Coca Cola 1.5L",
       "price": 2149.99,
       "description": "Botella de Coca Cola de 1.5L",
-      "stock": 2,
-      "category": "bebidas"
+      "stock": 6,
+      "category": "bebidas",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwvpC1Gn03JxTpIHCR93jZCtee81Ynp1WphQ&s"
     },
     {
       "id": "b863",
       "name": "Coca Cola 2L",
       "price": 5000,
       "description": "Botella de Coca Cola de 2L",
-      "stock": 5,
-      "category": "bebidas"
+      "stock": 4,
+      "category": "bebidas",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwvpC1Gn03JxTpIHCR93jZCtee81Ynp1WphQ&s"
     },
     {
       "id": "aa3e",
-      "name": "Fardo",
-      "price": 100,
-      "description": "Messi",
+      "name": "AirPods Pro",
+      "price": 500,
+      "description": "Buenardopolis",
       "stock": 100,
-      "category": "otros"
+      "category": "otros",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWkSWnL6892QKKyasE7ASJfgfa9IfibsouRA&s"
+    },
+    {
+      "id": "8e99",
+      "name": "Monitor",
+      "price": 1000,
+      "description": "LG",
+      "stock": 10,
+      "category": "testing",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThEhmVnKwD1Yr-yZZBHLCdZuFWVeFIve7OwA&s"
     }
   ],
   "carts": [

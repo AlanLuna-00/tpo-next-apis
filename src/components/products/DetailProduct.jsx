@@ -6,6 +6,7 @@ import {
   Button,
   CircularProgress,
   Box,
+  CardMedia,
 } from '@mui/material';
 
 const DetailProduct = ({ product, isLoading, addToCart, refetch }) => {
@@ -33,6 +34,9 @@ const DetailProduct = ({ product, isLoading, addToCart, refetch }) => {
 
   return (
     <Card sx={{ maxWidth: 400, margin: '0 auto' }}>
+      {product?.url && (
+        <CardMedia component="img" height="200" image={product?.url} alt={product.name} />
+      )}
       <CardContent>
         <Typography variant="h5" component="div" gutterBottom>
           {product?.name}
