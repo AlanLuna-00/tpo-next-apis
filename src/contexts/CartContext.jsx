@@ -21,6 +21,7 @@ export function CartProvider({ children }) {
 
   const addToCart = async product => {
     const { data } = await axios.get(`http://localhost:3001/products/${product.id}`);
+
     setCart(prevCart => {
       const existingItem = prevCart.find(item => item.id === product.id);
 
@@ -31,7 +32,8 @@ export function CartProvider({ children }) {
       }
       return [...prevCart, product];
     });
-    await axios.patch(`http://localhost:3001/products/${product.id}`, {
+
+    return axios.patch(`http://localhost:3001/products/${product.id}`, {
       stock: data.stock - 1,
     });
   };

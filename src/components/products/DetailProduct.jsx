@@ -7,9 +7,8 @@ import {
   CircularProgress,
   Box,
 } from '@mui/material';
-import { useCart } from '@/contexts/CartContext';
 
-const DetailProduct = ({ product, isLoading, addToCart }) => {
+const DetailProduct = ({ product, isLoading, addToCart, refetch }) => {
   if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
@@ -18,15 +17,17 @@ const DetailProduct = ({ product, isLoading, addToCart }) => {
     );
   }
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (product) {
-      addToCart({
+      await addToCart({
         id: product.id,
         name: product.name,
         price: product.price,
         quantity: 1,
         productId: product.id,
       });
+
+      await refetch();
     }
   };
 

@@ -6,13 +6,18 @@ import { useCart } from '@/contexts/CartContext';
 
 export default function ProductById() {
   const { id } = useParams();
-  const { product, loading: isLoading } = useGetProductById(id);
+  const { product, loading: isLoading, refetch } = useGetProductById(id);
   const { addToCart } = useCart();
 
   return (
     <div>
       <h1>Product By Id</h1>
-      <DetailProduct product={product} isLoading={isLoading} addToCart={addToCart} />
+      <DetailProduct
+        product={product}
+        isLoading={isLoading}
+        addToCart={addToCart}
+        refetch={refetch}
+      />
     </div>
   );
 }
